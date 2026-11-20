@@ -1,0 +1,483 @@
+/* ==========================================================
+   Colors and font. Change these few lines to restyle the site.
+   ========================================================== */
+/* Dark mode is the default: Prussian blue, the 18th-century pigment
+   (blue with a hint of green).
+   To go back to the earlier deep navy, use:
+   --bg: #0e1a2b; --surface: #14233a; --text: #e8edf4; --muted: #9babbf;
+   --line: #22334c; --underline: #3b4f6c; --accent-soft: #1d3540; */
+:root {
+  --font: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --bg: #08283d;          /* page background */
+  --surface: #0e3249;     /* project cards */
+  --text: #e6eef2;
+  --muted: #95afbe;       /* dates, labels, secondary text */
+  --line: #1b4058;        /* borders and dividers */
+  --underline: #335d77;   /* link underlines */
+  --accent: #82c9a5;      /* the one accent color */
+  --accent-soft: #1a4250; /* tag and badge backgrounds */
+  color-scheme: dark;
+}
+
+/* Light mode, for visitors who click the sun/moon switch: creamy beige */
+:root[data-theme="light"] {
+  --bg: #fbf5e6;
+  --surface: #fffcf4;
+  --text: #221f1a;
+  --muted: #6b6354;
+  --line: #e9e1ca;
+  --underline: #cfc4a6;
+  --accent: #1f5c45;
+  --accent-soft: #e5ecd6;
+  color-scheme: light;
+}
+
+/* ==========================================================
+   Base
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 10;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+/* One centered column */
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 80px 24px 40px;
+}
+
+/* ==========================================================
+   Intro
+   ========================================================== */
+.intro-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.name {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.tagline {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.status {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 3px 12px 4px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.status::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-top: 0.6em;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin-top: 24px;
+}
+
+.button {
+  display: inline-block;
+  padding: 5px 14px 6px;
+  border: 1px solid var(--text);
+  border-radius: 6px;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.button:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.theme-toggle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: 4px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--text);
+}
+
+.theme-toggle svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Dark (default) shows the sun; light shows the moon */
+.icon-moon,
+:root[data-theme="light"] .icon-sun {
+  display: none;
+}
+
+:root[data-theme="light"] .icon-moon {
+  display: block;
+}
+
+/* ==========================================================
+   Sections
+   ========================================================== */
+section {
+  margin-top: 56px;
+}
+
+section h2 {
+  margin: 0 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+section p {
+  margin: 0 0 14px;
+}
+
+section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Experience and education rows */
+.entries {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Role and dates on one line, organization underneath */
+.entry-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "role when"
+    "org  org";
+  column-gap: 16px;
+  align-items: baseline;
+}
+
+.entry h3 {
+  grid-area: role;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.org {
+  grid-area: org;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.when {
+  grid-area: when;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.entry p {
+  margin-top: 4px;
+}
+
+/* Key numbers in bold */
+strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Project cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+/* Only cards that are links lift on hover */
+a.card:hover {
+  color: inherit;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.card h3 {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.arrow {
+  color: var(--muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.card:hover .arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+.card p {
+  flex: 1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Line up titles, descriptions and tags across cards side by side,
+   however long each title is (older browsers keep the simpler layout above) */
+@supports (grid-template-rows: subgrid) {
+  .card {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: 8px;
+  }
+}
+
+/* Small labels */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 1px 9px 2px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.82rem;
+}
+
+.tags-lg {
+  gap: 8px;
+  margin: 0;
+}
+
+.tags-lg li {
+  padding: 3px 12px 4px;
+  font-size: 0.95rem;
+}
+
+/* Awards / certifications / languages rows */
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 10px 24px;
+  margin: 24px 0 0;
+}
+
+.facts dt {
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+/* ==========================================================
+   Footer
+   ========================================================== */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 72px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.back-to-top {
+  text-decoration: none;
+}
+
+/* ==========================================================
+   Phones
+   ========================================================== */
+@media (max-width: 600px) {
+  body {
+    font-size: 1.0625rem;
+  }
+
+  .page {
+    padding: 44px 16px 32px;
+  }
+
+  .name {
+    font-size: 2.1rem;
+  }
+
+  /* A long badge wraps, so use a rounded box instead of a pill */
+  .status {
+    padding: 5px 12px 6px;
+    border-radius: 10px;
+    line-height: 1.45;
+  }
+
+  section {
+    margin-top: 44px;
+  }
+
+  /* On phones: role, then organization, then dates */
+  .entry-head {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "role"
+      "org"
+      "when";
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Labels go above their text */
+  .facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .facts dd {
+    margin-bottom: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
